@@ -1,8 +1,7 @@
-version: '3.8'
-
 services:
   core-transfers-postgres:
-    image: postgres_custom_ru:latest
+    build:
+      dockerfile: Dockerfile
     container_name: core-transfers-postgres
     ports:
       - "5450:5432"
