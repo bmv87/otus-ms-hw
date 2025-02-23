@@ -38,7 +38,7 @@ public class TransfersServiceImpl implements TransfersService {
     public void execute(String clientId, ExecuteTransferDtoRq executeTransferDtoRq) {
         transferRequestValidator.validate(executeTransferDtoRq);
         // execution
-        if (!limitsService.isLimitEnough()) {
+        if (!limitsService.isLimitEnough(clientId, executeTransferDtoRq.getAmount())) {
             // ...
         }
         if (executeTransferDtoRq.getAmount().compareTo(transfersProperties.getMaxTransferSum()) > 0) {
