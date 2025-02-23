@@ -1,0 +1,16 @@
+server:
+  port : 8099
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: local.otus-kafka.transfers.group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+transfers:
+  topic: local.otus-kafka.transfers
