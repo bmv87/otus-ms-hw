@@ -31,6 +31,17 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(value = BusinessLogicException.class)
+    public ResponseEntity<ErrorDto> catchBusinessLogicException(BusinessLogicException e) {
+        return new ResponseEntity<>(
+                new ErrorDto(
+                        e.getCode(),
+                        e.getMessage()
+                ),
+                HttpStatus.UNPROCESSABLE_ENTITY
+        );
+    }
+
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<ErrorDto> catchException(Exception e) {
         logger.error("Произошла непредвиденная ошибка", e);

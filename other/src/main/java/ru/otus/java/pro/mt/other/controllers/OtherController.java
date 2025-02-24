@@ -1,4 +1,4 @@
-package ru.otus.java.pro.mt.limits.controllers;
+package ru.otus.java.pro.mt.other.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -8,21 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.otus.java.pro.mt.limits.dtos.RemainingLimitDto;
-
-import java.math.BigDecimal;
+import ru.otus.java.pro.mt.other.dtos.ValidationResultDto;
 
 @RestController
-@RequestMapping("/api/v1/limits")
-@Tag(name = "Лимиты", description = "Методы работы с лимитами")
-public class LimitsController {
+@RequestMapping("/api/v1/other")
+@Tag(name = "Другие параметры клиента", description = "Методы проверки клиента")
+public class OtherController {
 
-    @Operation(summary = "Получение оставшегося лимита")
+    @Operation(summary = "Проверка на другие параметры клиента")
     @GetMapping("/check")
-    public RemainingLimitDto checkLimit(
+    public ValidationResultDto checkOther(
             @Parameter(description = "Идентификатор клиента", required = true, schema = @Schema(type = "string", maxLength = 10, example = "1234567890"))
             @RequestHeader(name = "client-id") String clientId
     ) {
-        return new RemainingLimitDto(BigDecimal.valueOf(1000));
+        return new ValidationResultDto(true);
     }
 }

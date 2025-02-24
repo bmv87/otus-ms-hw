@@ -75,13 +75,21 @@ public class TransfersController {
     }
 
     @PostMapping
-    @Operation(summary = "Запрос на исполнение перевода")
+    @Operation(summary = "Запрос на исполнение перевода",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Превышена максимальная сумма перевода", responseCode = "422",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDto.class))
+                    )
+            })
     public void executeTransfer(
             @Parameter(description = "Идентификатор клиента", required = true, schema = @Schema(type = "string", maxLength = 10, example = "1234567890"))
             @RequestHeader(name = "client-id") String clientId,
 
-//            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Данные для выполнения перевода", required = true)
-            @Parameter(description = "Данные для выполнения перевода", required = true)
+            @Parameter(description = "Данные для выполнения перевода", required = true, schema = @Schema(implementation = ExecuteTransferDtoRq.class))
             @RequestBody ExecuteTransferDtoRq executeTransferDtoRq
     ) {
         transfersService.execute(clientId, executeTransferDtoRq);
