@@ -22,6 +22,7 @@ public class TransfersServiceImpl implements TransfersService {
     private final TransferRequestValidator transferRequestValidator;
     private final TransfersProperties transfersProperties;
     private final LimitsServiceImpl limitsService;
+    private final OtherServiceImpl otherService;
     private final TransferProducerService transferProducerService;
 
     @Override
@@ -41,10 +42,13 @@ public class TransfersServiceImpl implements TransfersService {
         if (!limitsService.isLimitEnough(clientId, executeTransferDtoRq.getAmount())) {
             // ...
         }
+        if (!otherService.isValid(clientId)) {
+            // ...
+        }
         if (executeTransferDtoRq.getAmount().compareTo(transfersProperties.getMaxTransferSum()) > 0) {
             throw new BusinessLogicException("OOPS", "OOPS_CODE");
         }
-        Transfer transfer = new Transfer(UUID.randomUUID().toString(), "1", "2", "1", "2", "Demo", BigDecimal.ONE);
+        Transfer transfer = new Transfer(UUID.randomUUID().toString(), clientId, executeTransferDtoRq.getTargetClientId(), executeTransferDtoRq.getSourceAccount(), executeTransferDtoRq.getTargetAccount(), "Demo", executeTransferDtoRq.getAmount());
         save(transfer);
         transferProducerService.notify(new TransferStatusDTO(transfer.getId(), "EXECUTED"));
     }

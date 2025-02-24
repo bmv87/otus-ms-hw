@@ -31,7 +31,11 @@ integrations:
   limits:
     url: http://localhost:8080/api/v1/limits
     read-timeout: 30s
-    write-timeout: 2s
+    connect-timeout: 2s
+  other:
+    url: http://localhost:8085/api/v1/other
+    read-timeout: 40s
+    connect-timeout: 3s
 logging:
   level:
     org.zalando.logbook.Logbook: TRACE

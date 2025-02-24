@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
-public class LimitsServiceImpl {
+public class LimitsServiceImpl implements LimitsService {
     private final LimitsIntegration limitsIntegration;
 
     public boolean isLimitEnough(String clientId, BigDecimal amount) {
